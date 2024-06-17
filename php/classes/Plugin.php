@@ -110,7 +110,7 @@ class Plugin {
 
 		$file = __DIR__ . '/../../assets/flot/jquery.flot' . $min . '.js';
 
-		wp_register_script(
+		\wp_register_script(
 			'flot',
 			\plugins_url( \basename( $file ), $file ),
 			[ 'jquery' ],
@@ -120,7 +120,7 @@ class Plugin {
 
 		$file = __DIR__ . '/../../assets/flot/jquery.flot.time' . $min . '.js';
 
-		wp_register_script(
+		\wp_register_script(
 			'flot-time',
 			\plugins_url( \basename( $file ), $file ),
 			[ 'flot' ],
@@ -130,7 +130,7 @@ class Plugin {
 
 		$file = __DIR__ . '/../../assets/flot/jquery.flot.resize' . $min . '.js';
 
-		wp_register_script(
+		\wp_register_script(
 			'flot-resize',
 			\plugins_url( \basename( $file ), $file ),
 			[ 'flot' ],
@@ -141,7 +141,7 @@ class Plugin {
 		$file = __DIR__ . '/../../assets/accounting/accounting' . $min . '.js';
 
 		// Accounting.js - http://openexchangerates.github.io/accounting.js.
-		wp_register_script(
+		\wp_register_script(
 			'accounting',
 			\plugins_url( \basename( $file ), $file ),
 			[ 'jquery' ],
@@ -168,17 +168,16 @@ class Plugin {
 
 		global $wp_locale;
 
-		wp_localize_script(
+		\wp_localize_script(
 			'pronamic-pay-admin-reports',
 			'pronamicPayAdminReports',
 			[
 				'data'       => $this->get_reports(),
-				'monthNames' => array_values( $wp_locale->month_abbrev ),
+				'monthNames' => \array_values( $wp_locale->month_abbrev ),
 			]
 		);
 
-		// Enqueue.
-		wp_enqueue_script( 'pronamic-pay-admin-reports' );
+		\wp_enqueue_script( 'pronamic-pay-admin-reports' );
 	}
 
 	/**
@@ -320,7 +319,7 @@ class Plugin {
 
 		foreach ( $data as $serie ) {
 			// @codingStandardsIgnoreStart
-			$serie->legendValue = array_sum( wp_list_pluck( $serie->data, 1 ) );
+			$serie->legendValue = \array_sum( \wp_list_pluck( $serie->data, 1 ) );
 			// @codingStandardsIgnoreEnd
 		}
 
@@ -376,15 +375,15 @@ class Plugin {
 			)
 		);
 
-		$months = wp_list_pluck( $results, 'month' );
+		$months = \wp_list_pluck( $results, 'month' );
 
 		switch ( $aggregate ) {
 			case 'COUNT':
-				$data = array_count_values( $months );
+				$data = \array_count_values( $months );
 
 				break;
 			case 'SUM':
-				$data = array_fill_keys(
+				$data = \array_fill_keys(
 					$months,
 					0
 				);
