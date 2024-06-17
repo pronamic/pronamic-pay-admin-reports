@@ -42,24 +42,7 @@ class Plugin {
 	public function setup() {
 		\add_action( 'admin_print_styles', [ $this, 'admin_css' ] );
 
-		\add_filter( 'pronamic_pay_modules', [ $this, 'modules' ] );
-
 		\add_action( 'admin_menu', [ $this, 'admin_menu' ], 100 );
-	}
-
-	/**
-	 * Modules.
-	 * 
-	 * @link https://github.com/pronamic/wp-pay-core/blob/bd197f4b1d3ddd2947c8d0a210171c2e7482bac7/src/Admin/AdminModule.php#L741
-	 * @param string[] $modules Modules.
-	 * @return string[]
-	 */
-	public function modules( $modules ) {
-		if ( ! \in_array( 'reports', $modules, true ) ) {
-			$modules[] = 'reports';
-		}
-
-		return $modules;
 	}
 
 	/**
