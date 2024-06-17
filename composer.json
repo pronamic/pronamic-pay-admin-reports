@@ -63,7 +63,7 @@
 		"php": ">=8.1",
 		"automattic/jetpack-autoloader": "^3.0",
 		"woocommerce/action-scheduler": "^3.8",
-		"wp-pay/core": "dev-main as 4.19"
+		"wp-pay/core": "^4.19"
 	},
 	"require-dev": {
 		"overtrue/phplint": "^9.1",
