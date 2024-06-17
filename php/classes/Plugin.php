@@ -70,11 +70,11 @@ class Plugin {
 	public function admin_menu() {
 		\add_submenu_page(
 			'pronamic_ideal',
-			\__( 'Reports', 'pronamic_ideal' ),
-			\__( 'Reports', 'pronamic_ideal' ),
+			\__( 'Reports', 'pronamic-pay-admin-reports' ),
+			\__( 'Reports', 'pronamic-pay-admin-reports' ),
 			'edit_payments',
 			'pronamic_pay_reports',
-			function() {
+			function () {
 				$this->page_reports();
 			}
 		);
@@ -191,7 +191,7 @@ class Plugin {
 
 		$data = [
 			(object) [
-				'label'      => __( 'Number successful payments', 'pronamic_ideal' ),
+				'label'      => __( 'Number successful payments', 'pronamic-pay-admin-reports' ),
 				'data'       => $this->get_report( 'payment_completed', 'COUNT', $start, $end ),
 				'color'      => '#dbe1e3',
 				'bars'       => (object) [
@@ -207,7 +207,7 @@ class Plugin {
 				'class'      => 'completed-count',
 			],
 			(object) [
-				'label'            => __( 'Open payments', 'pronamic_ideal' ),
+				'label'            => __( 'Open payments', 'pronamic-pay-admin-reports' ),
 				'data'             => $this->get_report( 'payment_pending', 'SUM', $start, $end ),
 				'yaxis'            => 2,
 				'color'            => '#b1d4ea',
@@ -228,7 +228,7 @@ class Plugin {
 				'class'            => 'pending-sum',
 			],
 			(object) [
-				'label'            => __( 'Successful payments', 'pronamic_ideal' ),
+				'label'            => __( 'Successful payments', 'pronamic-pay-admin-reports' ),
 				'data'             => $this->get_report( 'payment_completed', 'SUM', $start, $end ),
 				'yaxis'            => 2,
 				'color'            => '#3498db',
@@ -250,7 +250,7 @@ class Plugin {
 				'class'            => 'completed-sum',
 			],
 			(object) [
-				'label'            => __( 'Cancelled payments', 'pronamic_ideal' ),
+				'label'            => __( 'Cancelled payments', 'pronamic-pay-admin-reports' ),
 				'data'             => $this->get_report( 'payment_cancelled', 'SUM', $start, $end ),
 				'yaxis'            => 2,
 				'color'            => '#F1C40F',
@@ -272,7 +272,7 @@ class Plugin {
 				'class'            => 'cancelled-sum',
 			],
 			(object) [
-				'label'            => __( 'Expired payments', 'pronamic_ideal' ),
+				'label'            => __( 'Expired payments', 'pronamic-pay-admin-reports' ),
 				'data'             => $this->get_report( 'payment_expired', 'SUM', $start, $end ),
 				'yaxis'            => 2,
 				'color'            => '#DBE1E3',
@@ -294,7 +294,7 @@ class Plugin {
 				'class'            => 'expired-sum',
 			],
 			(object) [
-				'label'            => __( 'Failed payments', 'pronamic_ideal' ),
+				'label'            => __( 'Failed payments', 'pronamic-pay-admin-reports' ),
 				'data'             => $this->get_report( 'payment_failed', 'SUM', $start, $end ),
 				'yaxis'            => 2,
 				'color'            => '#E74C3C',
