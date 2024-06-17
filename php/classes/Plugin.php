@@ -17,22 +17,67 @@ use Pronamic\WordPress\Pay\Payments\Payment;
  */
 class Plugin {
 	/**
-	 * Plugin.
+	 * Instance.
 	 *
-	 * @var Plugin
+	 * @var self|null
 	 */
-	private $plugin;
+	private static $instance;
 
 	/**
-	 * AdminReports constructor.
+	 * Return an instance of this class.
 	 *
-	 * @param Plugin $plugin Plugin.
+	 * @return self A single instance of this class.
 	 */
-	public function __construct( Plugin $plugin ) {
-		$this->plugin = $plugin;
+	public static function instance() {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
 
-		// Actions.
-		add_action( 'admin_print_styles', [ $this, 'admin_css' ] );
+		return self::$instance;
+	}
+
+	/**
+	 * Setup.
+	 */
+	public function setup() {
+		\add_action( 'admin_print_styles', [ $this, 'admin_css' ] );
+
+		\add_filter( 'pronamic_pay_modules', [ $this, 'modules' ] );
+
+		\add_action( 'admin_menu', [ $this, 'admin_menu' ], 100 );
+	}
+
+	/**
+	 * Modules.
+	 * 
+	 * @link https://github.com/pronamic/wp-pay-core/blob/bd197f4b1d3ddd2947c8d0a210171c2e7482bac7/src/Admin/AdminModule.php#L741
+	 * @param string[] $modules Modules.
+	 * @return string[]
+	 */
+	public function modules( $modules ) {
+		if ( ! \in_array( 'reports', $modules, true ) ) {
+			$modules[] = 'reports';
+		}
+
+		return $modules;
+	}
+
+	/**
+	 * Create the admin menu.
+	 *
+	 * @return void
+	 */
+	public function admin_menu() {
+		\add_submenu_page(
+			'pronamic_ideal',
+			\__( 'Reports', 'pronamic_ideal' ),
+			\__( 'Reports', 'pronamic_ideal' ),
+			'edit_payments',
+			'pronamic_pay_reports',
+			function() {
+				$this->page_reports();
+			}
+		);
 	}
 
 	/**
@@ -43,7 +88,7 @@ class Plugin {
 	public function page_reports() {
 		$admin_reports = $this;
 
-		include __DIR__ . '/../../views/page-reports.php';
+		include __DIR__ . '/../views/page-reports.php';
 	}
 
 	/**
@@ -63,43 +108,53 @@ class Plugin {
 		// Flot - http://www.flotcharts.org/.
 		$flot_version = '0.8.0-alpha';
 
+		$file = __DIR__ . '/../../assets/flot/jquery.flot' . $min . '.js';
+
 		wp_register_script(
 			'flot',
-			plugins_url( '../../assets/flot/jquery.flot' . $min . '.js', __FILE__ ),
+			\plugins_url( \basename( $file ), $file ),
 			[ 'jquery' ],
 			$flot_version,
 			true
 		);
 
+		$file = __DIR__ . '/../../assets/flot/jquery.flot.time' . $min . '.js';
+
 		wp_register_script(
 			'flot-time',
-			plugins_url( '../../assets/flot/jquery.flot.time' . $min . '.js', __FILE__ ),
+			\plugins_url( \basename( $file ), $file ),
 			[ 'flot' ],
 			$flot_version,
 			true
 		);
 
+		$file = __DIR__ . '/../../assets/flot/jquery.flot.resize' . $min . '.js';
+
 		wp_register_script(
 			'flot-resize',
-			plugins_url( '../../assets/flot/jquery.flot.resize' . $min . '.js', __FILE__ ),
+			\plugins_url( \basename( $file ), $file ),
 			[ 'flot' ],
 			$flot_version,
 			true
 		);
+
+		$file = __DIR__ . '/../../assets/accounting/accounting' . $min . '.js';
 
 		// Accounting.js - http://openexchangerates.github.io/accounting.js.
 		wp_register_script(
 			'accounting',
-			plugins_url( '../../assets/accounting/accounting' . $min . '.js', __FILE__ ),
+			\plugins_url( \basename( $file ), $file ),
 			[ 'jquery' ],
 			'0.4.1',
 			true
 		);
 
 		// Reports.
-		wp_register_script(
+		$file = __DIR__ . '/../../js/dist/admin-reports' . $min . '.js';
+
+		\wp_register_script(
 			'pronamic-pay-admin-reports',
-			plugins_url( '../../js/dist/admin-reports' . $min . '.js', __FILE__ ),
+			\plugins_url( \basename( $file ), $file ),
 			[
 				'jquery',
 				'flot',
@@ -107,7 +162,7 @@ class Plugin {
 				'flot-resize',
 				'accounting',
 			],
-			$this->plugin->get_version(),
+			\hash_file( 'crc32b', $file ),
 			true
 		);
 
