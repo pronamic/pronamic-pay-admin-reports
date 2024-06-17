@@ -62,6 +62,7 @@
 	"require": {
 		"php": ">=8.1",
 		"automattic/jetpack-autoloader": "^3.0",
+		"pronamic/wp-money": "^2.4",
 		"woocommerce/action-scheduler": "^3.8",
 		"wp-pay/core": "^4.19"
 	},
