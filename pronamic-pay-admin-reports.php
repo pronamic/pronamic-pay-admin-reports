@@ -4,7 +4,7 @@
  * Plugin URI: https://www.pronamic.eu/plugins/pronamic-pay-admin-reports/
  * Description: This plugin adds simple reporting functionality in the WordPress admin dashboard for the Pronamic Pay plugin.
  *
- * Version: 1.0.0
+ * Version: 1.0.1
  * Requires at least: 5.9
  * Requires PHP: 8.1
  *
