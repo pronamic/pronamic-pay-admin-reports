@@ -5,7 +5,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/) and [Keep a CHANGELOG](https://keepachangelog.com/).
 
 ## [Unreleased][unreleased]
--
+
+### Changed
+
+- Widened the `automattic/jetpack-autoloader` requirement to `^3.0 || ^4.0 || ^5.0 || ^6.0` to allow the Jetpack Autoloader 6.x series. [#2](https://github.com/pronamic/pronamic-pay-admin-reports/issues/2)
 
 ## [1.1.0] - 2026-07-31
 
